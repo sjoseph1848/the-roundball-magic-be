@@ -51,5 +51,23 @@ app.get("/games", (req, res) => {
   });
 });
 
+
+
+app.get("/news", (req, res) => {
+  const options = {
+    method: "GET",
+    url: `https://newsapi.org/v2/everything?q=NBA%playoffs&apiKey=${functions.config().news.key}`,
+  };
+  request(options, (error, response) => {
+    if (error) throw new Error(error);
+    const data = JSON.parse(response.body);
+    res.send({
+      data
+    });
+  });
+});
+
+
+
 exports.api = functions.https.onRequest(app);
 
